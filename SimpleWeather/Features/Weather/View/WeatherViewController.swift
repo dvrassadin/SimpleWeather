@@ -14,6 +14,12 @@ final class WeatherViewController: UIViewController {
     private let viewModel: WeatherViewModel
     private lazy var contentView = WeatherView()
     
+    private var isLoading: Bool = false {
+        didSet {
+            isLoading ? contentView.showLoading() : contentView.hideLoading()
+        }
+    }
+    
     // MARK: Lifecycle
     
     init(viewModel: WeatherViewModel) {
@@ -32,11 +38,8 @@ final class WeatherViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupBindings()
-    }
-    
-    override func viewIsAppearing(_ animated: Bool) {
-        super.viewIsAppearing(animated)
-        viewModel.viewIsAppearing()
+        subscribeToNotifications()
+        viewModel.viewDidLoad()
     }
     
     // MARK: Setup
@@ -47,27 +50,56 @@ final class WeatherViewController: UIViewController {
         }
     }
     
+    private func subscribeToNotifications() {
+        NotificationCenter.default.addObserver(
+            forName: UIApplication.didBecomeActiveNotification,
+            object: nil,
+            queue: nil,
+            using: { [weak self] _ in
+                Task { @MainActor in
+                    self?.handleApplicationDidBecomeActive()
+                }
+            }
+        )
+    }
+    
     // MARK: Update UI
     
     private func handleViewState(_ state: WeatherViewState) {
         switch state {
         case .loading:
-            contentView.showLoading()
+            isLoading = true
         case .loaded(let weather):
-            contentView.hideLoading()
+            isLoading = false
             contentView.update(weather: weather)
         case .error(let message):
-            contentView.hideLoading()
+            isLoading = false
             showError(message: message)
         }
     }
     
+    private func handleApplicationDidBecomeActive() {
+        guard !isLoading else { return }
+        
+        viewModel.retryFetchWeather()
+    }
+    
     private func showError(message: String) {
-        let alertController = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
-        let refreshAction = UIAlertAction(title: "Try again", style: .default) { [weak self] _ in
-            self?.viewModel.retryFetchWeather()
+        let alertController = UIAlertController(
+            title: String(localized: "Error"),
+            message: message,
+            preferredStyle: .alert
+        )
+        let refreshAction = UIAlertAction(
+            title: String(localized: "Try again"),
+            style: .default
+        ) { [weak self] _ in
+            guard let self, !isLoading else { return }
+            
+            viewModel.retryFetchWeather()
         }
         alertController.addAction(refreshAction)
+        
         present(alertController, animated: true)
     }
 

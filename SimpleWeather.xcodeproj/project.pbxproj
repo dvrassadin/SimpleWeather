@@ -149,6 +149,7 @@
 				INFOPLIST_FILE = SimpleWeather/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Weather;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.weather";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "This app uses your location to provide accurate weather information based on your current position.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
@@ -181,6 +182,7 @@
 				INFOPLIST_FILE = SimpleWeather/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Weather;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.weather";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "This app uses your location to provide accurate weather information based on your current position.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;

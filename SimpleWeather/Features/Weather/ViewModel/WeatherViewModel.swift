@@ -5,7 +5,7 @@
 //  Created by Daniil Rassadin on 12/5/25.
 //
 
-import Foundation
+import CoreLocation
 
 final class WeatherViewModel: WeatherViewModelProtocol {
     
@@ -15,8 +15,8 @@ final class WeatherViewModel: WeatherViewModelProtocol {
     
     // MARK: Servicies
     
-    let locationService: LocationServiceProtocol
-    let networkService: NetworkServiceProtocol
+    private let locationService: LocationServiceProtocol
+    private let networkService: NetworkServiceProtocol
     
     // MARK: Initialization
     
@@ -27,7 +27,8 @@ final class WeatherViewModel: WeatherViewModelProtocol {
     
     // MARK: Public Methods
     
-    func viewIsAppearing() {
+    func viewDidLoad() {
+        locationService.requestAuthorizationIfNeeded()
         fetchWeatherData()
     }
     
@@ -39,11 +40,25 @@ final class WeatherViewModel: WeatherViewModelProtocol {
     
     private func fetchWeatherData() {
         viewState?(.loading)
+        locationService.requestCurrentLocation { [weak self] location in
+            if let location {
+                self?.fetchWeather(for: location.coordinate)
+            } else {
+                let moscowCoordinates = CLLocationCoordinate2D(
+                    latitude: 55.75866,
+                    longitude: 37.61929
+                )
+                self?.fetchWeather(for: moscowCoordinates)
+            }
+        }
+    }
+    
+    private func fetchWeather(for coordinates: CLLocationCoordinate2D) {
         Task {
             do {
                 let weatherForecast = try await NetworkService.shared.getWeatherForecast(
-                    latitude: 55.75866,
-                    longitude: 37.61929,
+                    latitude: coordinates.latitude,
+                    longitude: coordinates.longitude,
                     days: 2
                 )
                 viewState?(.loaded(weather: weatherForecast))
@@ -52,4 +67,5 @@ final class WeatherViewModel: WeatherViewModelProtocol {
             }
         }
     }
+    
 }
