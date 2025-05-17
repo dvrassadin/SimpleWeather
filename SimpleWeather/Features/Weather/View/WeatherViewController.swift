@@ -27,5 +27,16 @@ final class WeatherViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
     }
+    
+    override func viewIsAppearing(_ animated: Bool) {
+        super.viewIsAppearing(animated)
+        Task {
+            try await NetworkService.shared.getWeatherForecast(
+                latitude: 55.75866,
+                longitude: 37.61929,
+                days: 2
+            )
+        }
+    }
 
 }

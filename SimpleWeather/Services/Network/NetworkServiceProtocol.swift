@@ -8,5 +8,9 @@
 import Foundation
 
 protocol NetworkServiceProtocol {
-    
+    func getWeatherForecast(
+        latitude: Double,
+        longitude: Double,
+        days: Int
+    ) async throws -> APIWeatherForecast
 }

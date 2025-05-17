@@ -1,5 +1,5 @@
 //
-//  WeatherAPIResponse.swift
+//  APIWeatherForecast.swift
 //  SimpleWeather
 //
 //  Created by Daniil Rassadin on 13/5/25.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct WeatherAPIResponse: Decodable {
+struct APIWeatherForecast: Decodable {
     let location: Location
     let current: Current
     let forecast: Forecast
