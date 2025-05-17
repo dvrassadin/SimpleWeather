@@ -59,13 +59,40 @@ final class WeatherViewModel: WeatherViewModelProtocol {
                 let weatherForecast = try await NetworkService.shared.getWeatherForecast(
                     latitude: coordinates.latitude,
                     longitude: coordinates.longitude,
-                    days: 2
+                    days: 7
                 )
-                viewState?(.loaded(weather: weatherForecast))
+                let currentWeather = mapToCurrentWeather(from: weatherForecast)
+                let hourlyWeather = mapToHourlyWeather(from: weatherForecast)
+                viewState?(.loaded(current: currentWeather, hourly: hourlyWeather))
             } catch {
                 viewState?(.error(message: error.localizedDescription))
             }
         }
+    }
+    
+    // MARK: Mapping Functions
+    
+    private func mapToCurrentWeather(from response: APIWeatherForecast) -> CurrentWeather {
+        let highest = (response.forecast.forecastday.first?.day.maxtempC)
+            .map { "\(Int(round($0)))°" }
+        let lowest = (response.forecast.forecastday.first?.day.mintempC)
+            .map { "\(Int(round($0)))°" }
+        
+        return CurrentWeather(
+            locationName: response.location.name,
+            temperature: "\(Int(round(response.current.tempC)))°",
+            description: response.current.condition.text,
+            minimumTemperature: highest,
+            maximumTemperature: lowest
+        )
+    }
+    
+    private func mapToHourlyWeather(from response: APIWeatherForecast) -> [HourlyWeather] {
+        []
+    }
+    
+    private func mapToDailyWeather(from response: APIWeatherForecast) -> [DailyWeather] {
+        []
     }
     
 }

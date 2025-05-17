@@ -9,6 +9,6 @@ import Foundation
 
 enum WeatherViewState {
     case loading
-    case loaded(weather: APIWeatherForecast)
+    case loaded(current: CurrentWeather, hourly: [HourlyWeather])
     case error(message: String)
 }

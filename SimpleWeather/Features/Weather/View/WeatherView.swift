@@ -137,18 +137,16 @@ final class WeatherView: UIView {
         activityIndicator.stopAnimating()
     }
     
-    func update(weather: APIWeatherForecast) {
-        cityLabel.text = weather.location.name
+    func update(current: CurrentWeather) {
+        cityLabel.text = current.locationName
         cityLabel.isHidden = false
-        temperatureLabel.text = "\(Int(round(weather.current.tempC)))°"
+        temperatureLabel.text = current.temperature
         temperatureLabel.isHidden = false
-        statusLabel.text = weather.current.condition.text
+        statusLabel.text = current.description
         statusLabel.isHidden = false
-        minMaxLabel.text = "H:34°  L:20°"
-        if let highest = weather.forecast.forecastday.first?.day.maxtempC,
-           let lowest = weather.forecast.forecastday.first?.day.mintempC {
+        if let highest = current.maximumTemperature, let lowest = current.minimumTemperature {
             minMaxLabel.text = String(
-                localized: "H:\(Int(round(highest)))°  L:\(Int(round(lowest)))°"
+                localized: "H:\(highest) L:\(lowest)"
             )
             minMaxLabel.isHidden = false
         }
