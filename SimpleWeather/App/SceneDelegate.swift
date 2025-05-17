@@ -20,7 +20,13 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         
         window = UIWindow(windowScene: windowScene)
-        window?.rootViewController = ViewController()
+        let locationService = LocationService.shared
+        let networkService = NetworkService.shared
+        let viewModel = WeatherViewModel(
+            locationService: locationService,
+            networkService: networkService
+        )
+        window?.rootViewController = WeatherViewController(viewModel: viewModel)
         window?.makeKeyAndVisible()
     }
 
