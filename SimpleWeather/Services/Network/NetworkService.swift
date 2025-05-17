@@ -66,9 +66,10 @@ final class NetworkService: NetworkServiceProtocol {
             
             let weatherForecast = try decoder.decode(APIWeatherForecast.self, from: data)
             logger.info("Received weather forecast for \(weatherForecast.location.name) from \(url.absoluteString)")
+            
             return weatherForecast
         } catch {
-            logger.error("Failed to get response from \(url.absoluteString): \(error.localizedDescription)")
+            logger.error("Failed to get response from \(url.absoluteString): \(error)")
             throw error
         }
     }

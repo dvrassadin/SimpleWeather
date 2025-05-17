@@ -7,6 +7,10 @@
 
 import Foundation
 
+@MainActor
 protocol WeatherViewModelProtocol {
+    var viewState: ((WeatherViewState) -> Void)? { get set }
     
+    func viewIsAppearing()
+    func retryFetchWeather()
 }

@@ -17,14 +17,26 @@ struct APIWeatherForecast: Decodable {
     }
     
     struct Current: Decodable {
+        let tempC: Double
+        let condition: Condition
         
+        struct Condition: Decodable {
+            let text: String
+            let icon: String
+        }
     }
     
     struct Forecast: Decodable {
         let forecastday: [Forecastday]
         
         struct Forecastday: Decodable {
+            let day: Day
             
+            struct Day: Decodable {
+                let maxtempC: Double
+                let mintempC: Double
+            }
         }
     }
+    
 }
