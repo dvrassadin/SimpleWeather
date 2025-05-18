@@ -63,7 +63,10 @@ final class WeatherViewModel: WeatherViewModelProtocol {
                 )
                 let currentWeather = mapToCurrentWeather(from: weatherForecast)
                 let hourlyWeather = mapToHourlyWeather(from: weatherForecast)
-                viewState?(.loaded(current: currentWeather, hourly: hourlyWeather))
+                let dailyWeather = mapToDailyWeather(from: weatherForecast)
+                viewState?(
+                    .loaded(current: currentWeather, hourly: hourlyWeather, daily: dailyWeather)
+                )
             } catch {
                 viewState?(.error(message: error.localizedDescription))
             }
@@ -80,7 +83,7 @@ final class WeatherViewModel: WeatherViewModelProtocol {
         
         return CurrentWeather(
             locationName: response.location.name,
-            temperature: "\(Int(round(response.current.tempC)))°",
+            temperature: "\(Int(response.current.tempC.rounded()))°",
             description: response.current.condition.text,
             minimumTemperature: highest,
             maximumTemperature: lowest
@@ -99,13 +102,24 @@ final class WeatherViewModel: WeatherViewModelProtocol {
                 HourlyWeather(
                     hour: hour.timeEpoch.formatted(.dateTime.hour()),
                     iconURL: URL(string: "https:\(hour.condition.icon)"),
-                    temperature: "\(Int(round(hour.tempC)))°"
+                    temperature: "\(Int(hour.tempC.rounded()))°"
                 )
             }
     }
     
     private func mapToDailyWeather(from response: APIWeatherForecast) -> [DailyWeather] {
-        []
+        response.forecast.forecastday.map { forecast in
+            let precipitation = max(forecast.day.dailyChanceOfRain, forecast.day.dailyChanceOfSnow)
+            let chance = precipitation > 0 ? "\(precipitation)%" : nil
+            
+            return DailyWeather(
+                day: forecast.dateEpoch.formatted(.dateTime.weekday()),
+                iconURL: URL(string: "https:\(forecast.day.condition.icon)"),
+                minimumTemperature: "\(Int(forecast.day.mintempC.rounded()))°",
+                maximumTemperature: "\(Int(forecast.day.maxtempC.rounded()))°",
+                chanceOfPrecipitation: chance
+            )
+        }
     }
     
 }

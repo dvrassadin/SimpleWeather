@@ -37,6 +37,9 @@ struct APIWeatherForecast: Decodable {
             struct Day: Decodable {
                 let maxtempC: Double
                 let mintempC: Double
+                let condition: Condition
+                let dailyChanceOfRain: Int
+                let dailyChanceOfSnow: Int
                 
                 struct Condition: Decodable {
                     let icon: String

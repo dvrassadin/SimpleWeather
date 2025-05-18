@@ -78,9 +78,9 @@ final class WeatherViewController: UIViewController {
         switch state {
         case .loading:
             isLoading = true
-        case .loaded(let current, let hourly):
+        case .loaded(let current, let hourly, let daily):
             isLoading = false
-            contentView.update(current: current)
+            contentView.update(current: current, daily: daily)
             applyHourlyWeatherSnapshot(weather: hourly)
         case .error(let message):
             isLoading = false

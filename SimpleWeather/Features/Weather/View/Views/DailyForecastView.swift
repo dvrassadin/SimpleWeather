@@ -1,43 +1,32 @@
 //
-//  HourlyForecastView.swift
+//  DailyForecastView.swift
 //  SimpleWeather
 //
-//  Created by Daniil Rassadin on 17/5/25.
+//  Created by Daniil Rassadin on 18/5/25.
 //
 
 import UIKit
 
-final class HourlyForecastView: UIView {
+final class DailyForecastView: UIView {
 
     // MARK: UI Components
     
     private let imageView = UIImageView(
         image: UIImage(
-            systemName: "clock"
+            systemName: "calendar"
         )?.withTintColor(.Brand.secondaryText, renderingMode: .alwaysOriginal)
     )
     
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.text = String(localized: "HOURLY FORECAST")
         label.font = .systemFont(ofSize: 14, weight: .semibold)
         label.textColor = .Brand.secondaryText
         return label
     }()
     
-    let collectionView: UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        layout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
-        layout.scrollDirection = .horizontal
-        layout.minimumLineSpacing = 20
-        layout.sectionInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
-        let collectionView = UICollectionView(
-            frame: .zero,
-            collectionViewLayout: layout
-        )
-        collectionView.showsHorizontalScrollIndicator = false
-        collectionView.backgroundColor = .clear
-        return collectionView
+    private let stackView: UIStackView = {
+        let stackView = UIStackView()
+        return stackView
     }()
     
     // MARK: Initialization
@@ -52,7 +41,7 @@ final class HourlyForecastView: UIView {
     }
     
     // MARK: UI Setup
-    
+
     private func setupUI() {
         backgroundColor = .Brand.widget
         layer.cornerRadius = 16
@@ -63,13 +52,13 @@ final class HourlyForecastView: UIView {
     private func setupSubviews() {
         addSubview(imageView)
         addSubview(titleLabel)
-        addSubview(collectionView)
+        addSubview(stackView)
     }
     
     private func setupConstraints() {
         imageView.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
             imageView.topAnchor.constraint(equalTo: topAnchor, constant: 8),
@@ -81,11 +70,18 @@ final class HourlyForecastView: UIView {
             titleLabel.leadingAnchor.constraint(equalTo: imageView.trailingAnchor, constant: 8),
             titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
             
-            collectionView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 8),
-            collectionView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            collectionView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            collectionView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8)
+            stackView.topAnchor.constraint(equalTo: titleLabel.topAnchor, constant: 8),
+            stackView.leadingAnchor.constraint(equalTo: imageView.leadingAnchor),
+            stackView.trailingAnchor.constraint(equalTo: titleLabel.trailingAnchor),
+            stackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8)
         ])
     }
-
+    
+    // MARK: Public Methods
+    
+    func update(daily: [DailyWeather]) {
+        titleLabel.text = String(localized: "\(daily.count)-DAY FORECAST")
+        stackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
+    }
+    
 }

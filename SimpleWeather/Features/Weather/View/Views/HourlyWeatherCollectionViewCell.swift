@@ -65,6 +65,7 @@ final class HourlyWeatherCollectionViewCell: UICollectionViewCell {
             hourLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -8),
             
             statusImageView.topAnchor.constraint(equalTo: hourLabel.bottomAnchor, constant: 8),
+            statusImageView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
             statusImageView.heightAnchor.constraint(equalToConstant: 32),
             statusImageView.widthAnchor.constraint(equalTo: statusImageView.heightAnchor),
             
