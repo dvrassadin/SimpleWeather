@@ -17,6 +17,7 @@ An iOS weather app built with **Swift 6** and **UIKit**, fully programmatic (no 
 - **UI Framework:** UIKit with Auto Layout (programmatic, no Storyboard)
 - **Networking:** URLSession
 - **Image Loading:** [Kingfisher](https://github.com/onevcat/Kingfisher)
+- **Dependency Management:** Swift Package Manager (SPM)
 - **Geolocation:** CoreLocation
 - **Data Source:** [WeatherAPI](https://www.weatherapi.com/)
 
