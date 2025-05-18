@@ -8,7 +8,8 @@
 import CoreLocation
 import OSLog
 
-final class LocationService: NSObject, LocationServiceProtocol {
+@MainActor
+final class LocationService: NSObject, @preconcurrency LocationServiceProtocol {
     static let shared = LocationService()
     
     // MARK: Properties

@@ -7,7 +7,6 @@
 
 import CoreLocation
 
-@MainActor
 protocol LocationServiceProtocol {
     func requestAuthorizationIfNeeded()
     func requestCurrentLocation(completion: @escaping (CLLocation?) -> Void)

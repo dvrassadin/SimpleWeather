@@ -20,6 +20,15 @@ final class WeatherViewController: UIViewController {
         }
     }
     
+    private lazy var hourlyWeatherDataSource = makeHourlyDataSource()
+    
+    private let hourlyWeatherCellRegistration = UICollectionView.CellRegistration<
+        HourlyWeatherCollectionViewCell,
+        HourlyWeather
+    > { cell, _, weather in
+        cell.configure(with: weather)
+    }
+    
     // MARK: Lifecycle
     
     init(viewModel: WeatherViewModel) {
@@ -72,6 +81,7 @@ final class WeatherViewController: UIViewController {
         case .loaded(let current, let hourly):
             isLoading = false
             contentView.update(current: current)
+            applyHourlyWeatherSnapshot(weather: hourly)
         case .error(let message):
             isLoading = false
             showError(message: message)
@@ -101,6 +111,29 @@ final class WeatherViewController: UIViewController {
         alertController.addAction(refreshAction)
         
         present(alertController, animated: true)
+    }
+    
+    // MARK: Hourly Weather Diffable Data Source
+    
+    private func makeHourlyDataSource() -> UICollectionViewDiffableDataSource<Int, HourlyWeather> {
+        UICollectionViewDiffableDataSource(
+            collectionView: contentView.hourlyForecastView.collectionView) {
+                [weak self] collectionView, indexPath, weather in
+                guard let self else { return nil }
+                
+                return collectionView.dequeueConfiguredReusableCell(
+                    using: hourlyWeatherCellRegistration,
+                    for: indexPath,
+                    item: weather
+                )
+            }
+    }
+    
+    private func applyHourlyWeatherSnapshot(weather: [HourlyWeather]) {
+        var weatherSnapshot = NSDiffableDataSourceSnapshot<Int, HourlyWeather>()
+        weatherSnapshot.appendSections([0])
+        weatherSnapshot.appendItems(weather)
+        hourlyWeatherDataSource.apply(weatherSnapshot)
     }
 
 }

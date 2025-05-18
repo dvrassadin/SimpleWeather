@@ -52,6 +52,8 @@ final class WeatherView: UIView {
         return label
     }()
     
+    let hourlyForecastView = HourlyForecastView()
+    
     // MARK: Initialization
     
     init() {
@@ -79,6 +81,7 @@ final class WeatherView: UIView {
         contentView.addSubview(temperatureLabel)
         contentView.addSubview(statusLabel)
         contentView.addSubview(minMaxLabel)
+        contentView.addSubview(hourlyForecastView)
     }
     
     private func setupConstraints() {
@@ -89,6 +92,7 @@ final class WeatherView: UIView {
         temperatureLabel.translatesAutoresizingMaskIntoConstraints = false
         statusLabel.translatesAutoresizingMaskIntoConstraints = false
         minMaxLabel.translatesAutoresizingMaskIntoConstraints = false
+        hourlyForecastView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
             activityIndicator.centerXAnchor.constraint(equalTo: centerXAnchor),
@@ -118,8 +122,13 @@ final class WeatherView: UIView {
             minMaxLabel.topAnchor.constraint(equalTo: statusLabel.bottomAnchor, constant: 4),
             minMaxLabel.leadingAnchor.constraint(equalTo: cityLabel.leadingAnchor),
             minMaxLabel.trailingAnchor.constraint(equalTo: cityLabel.trailingAnchor),
+            
+            hourlyForecastView.topAnchor.constraint(equalTo: minMaxLabel.bottomAnchor, constant: 16),
+            hourlyForecastView.leadingAnchor.constraint(equalTo: cityLabel.leadingAnchor),
+            hourlyForecastView.trailingAnchor.constraint(equalTo: cityLabel.trailingAnchor),
+            hourlyForecastView.heightAnchor.constraint(equalToConstant: 170),
 
-            minMaxLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
+            hourlyForecastView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
         ])
     }
     
@@ -131,6 +140,7 @@ final class WeatherView: UIView {
         temperatureLabel.isHidden = true
         statusLabel.isHidden = true
         minMaxLabel.isHidden = true
+        hourlyForecastView.isHidden = true
     }
     
     func hideLoading() {
@@ -150,6 +160,7 @@ final class WeatherView: UIView {
             )
             minMaxLabel.isHidden = false
         }
+        hourlyForecastView.isHidden = false
     }
 
 }

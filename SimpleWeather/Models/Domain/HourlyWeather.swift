@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct HourlyWeather {
+struct HourlyWeather: Hashable {
     let hour: String
     let iconURL: URL?
     let temperature: String

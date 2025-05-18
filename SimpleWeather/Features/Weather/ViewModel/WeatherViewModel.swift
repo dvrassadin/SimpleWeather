@@ -88,7 +88,20 @@ final class WeatherViewModel: WeatherViewModelProtocol {
     }
     
     private func mapToHourlyWeather(from response: APIWeatherForecast) -> [HourlyWeather] {
-        []
+        response.forecast.forecastday
+            .filter { day in
+                Calendar.current.isDateInToday(day.dateEpoch) ||
+                Calendar.current.isDateInTomorrow(day.dateEpoch)
+            }
+            .flatMap { $0.hour }
+            .filter { $0.timeEpoch > .now }
+            .map { hour in
+                HourlyWeather(
+                    hour: hour.timeEpoch.formatted(.dateTime.hour()),
+                    iconURL: URL(string: "https:\(hour.condition.icon)"),
+                    temperature: "\(Int(round(hour.tempC)))°"
+                )
+            }
     }
     
     private func mapToDailyWeather(from response: APIWeatherForecast) -> [DailyWeather] {

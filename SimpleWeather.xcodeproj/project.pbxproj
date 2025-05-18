@@ -3,15 +3,19 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 77;
+	objectVersion = 70;
 	objects = {
+
+/* Begin PBXBuildFile section */
+		51924DD92DD9AB50001BA96E /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 51924DD82DD9AB50001BA96E /* Kingfisher */; };
+/* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		5116ED4E2DD264F000599728 /* SimpleWeather.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SimpleWeather.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		5116ED602DD264F100599728 /* Exceptions for "SimpleWeather" folder in "SimpleWeather" target */ = {
+		5116ED602DD264F100599728 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
@@ -21,14 +25,7 @@
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		5116ED502DD264F000599728 /* SimpleWeather */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-				5116ED602DD264F100599728 /* Exceptions for "SimpleWeather" folder in "SimpleWeather" target */,
-			);
-			path = SimpleWeather;
-			sourceTree = "<group>";
-		};
+		5116ED502DD264F000599728 /* SimpleWeather */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (5116ED602DD264F100599728 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = SimpleWeather; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -36,6 +33,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				51924DD92DD9AB50001BA96E /* Kingfisher in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -78,6 +76,7 @@
 			);
 			name = SimpleWeather;
 			packageProductDependencies = (
+				51924DD82DD9AB50001BA96E /* Kingfisher */,
 			);
 			productName = SimpleWeather;
 			productReference = 5116ED4E2DD264F000599728 /* SimpleWeather.app */;
@@ -99,6 +98,7 @@
 				};
 			};
 			buildConfigurationList = 5116ED492DD264F000599728 /* Build configuration list for PBXProject "SimpleWeather" */;
+			compatibilityVersion = "Xcode 15.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -106,7 +106,9 @@
 			);
 			mainGroup = 5116ED452DD264EF00599728;
 			minimizedProjectReferenceProxies = 1;
-			preferredProjectObjectVersion = 77;
+			packageReferences = (
+				51924DD72DD9AB50001BA96E /* XCRemoteSwiftPackageReference "Kingfisher" */,
+			);
 			productRefGroup = 5116ED4F2DD264F000599728 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -346,6 +348,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		51924DD72DD9AB50001BA96E /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/onevcat/Kingfisher";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 8.3.2;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		51924DD82DD9AB50001BA96E /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 51924DD72DD9AB50001BA96E /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 5116ED462DD264F000599728 /* Project object */;
 }
