@@ -11,6 +11,10 @@ An iOS weather app built with **Swift 6** and **UIKit**, fully programmatic (no 
 - ⚠️ **Error handling:** If data fails to load, shows an error message with a retry button.
 - 💡 **Apple-style design:** Clean, readable, and modern UI with dynamic layout.
 
+## 🧱 Architecture
+
+The app is structured using the **MVVM (Model-View-ViewModel)** pattern for better separation of concerns and easier testing and maintenance.
+
 ## 📦 Tech Stack
 
 - **Language:** Swift 6
