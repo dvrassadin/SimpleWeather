@@ -12,5 +12,5 @@ struct DailyWeather {
     let iconURL: URL?
     let minimumTemperature: String
     let maximumTemperature: String
-    let chanceOfPrecipitation: String?
+    let chanceOfPrecipitation: String
 }

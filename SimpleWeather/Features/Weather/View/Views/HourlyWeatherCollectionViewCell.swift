@@ -14,7 +14,7 @@ final class HourlyWeatherCollectionViewCell: UICollectionViewCell {
     
     private let hourLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 16, weight: .medium)
+        label.font = .systemFont(ofSize: 16, weight: .medium)
         label.textColor = .white
         label.textAlignment = .center
         return label
@@ -24,7 +24,7 @@ final class HourlyWeatherCollectionViewCell: UICollectionViewCell {
     
     private let temperatureLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 18, weight: .semibold)
+        label.font = .systemFont(ofSize: 18, weight: .semibold)
         label.textColor = .white
         label.textAlignment = .center
         return label

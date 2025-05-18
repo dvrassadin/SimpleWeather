@@ -26,6 +26,8 @@ final class DailyForecastView: UIView {
     
     private let stackView: UIStackView = {
         let stackView = UIStackView()
+        stackView.axis = .vertical
+        stackView.layoutMargins = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
         return stackView
     }()
     
@@ -70,7 +72,7 @@ final class DailyForecastView: UIView {
             titleLabel.leadingAnchor.constraint(equalTo: imageView.trailingAnchor, constant: 8),
             titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
             
-            stackView.topAnchor.constraint(equalTo: titleLabel.topAnchor, constant: 8),
+            stackView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 8),
             stackView.leadingAnchor.constraint(equalTo: imageView.leadingAnchor),
             stackView.trailingAnchor.constraint(equalTo: titleLabel.trailingAnchor),
             stackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8)
@@ -82,6 +84,9 @@ final class DailyForecastView: UIView {
     func update(daily: [DailyWeather]) {
         titleLabel.text = String(localized: "\(daily.count)-DAY FORECAST")
         stackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
+        daily.forEach { weather in
+            stackView.addArrangedSubview(DailyForecastCell(daily: weather))
+        }
     }
     
 }

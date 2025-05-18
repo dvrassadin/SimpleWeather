@@ -109,11 +109,14 @@ final class WeatherViewModel: WeatherViewModelProtocol {
     
     private func mapToDailyWeather(from response: APIWeatherForecast) -> [DailyWeather] {
         response.forecast.forecastday.map { forecast in
+            let weekday = Calendar.current.isDateInToday(forecast.dateEpoch) ?
+            "Today" : forecast.dateEpoch.formatted(.dateTime.weekday(.wide))
+            
             let precipitation = max(forecast.day.dailyChanceOfRain, forecast.day.dailyChanceOfSnow)
-            let chance = precipitation > 0 ? "\(precipitation)%" : nil
+            let chance = precipitation > 0 ? "\(precipitation)%" : " "
             
             return DailyWeather(
-                day: forecast.dateEpoch.formatted(.dateTime.weekday()),
+                day: weekday,
                 iconURL: URL(string: "https:\(forecast.day.condition.icon)"),
                 minimumTemperature: "\(Int(forecast.day.mintempC.rounded()))°",
                 maximumTemperature: "\(Int(forecast.day.maxtempC.rounded()))°",
